@@ -1,8 +1,8 @@
-PyDelhi Conf 2017 Application 
+PyData Conf 2017 Application 
 =============================
 
 
-> Mobile App for PyDelhi Conf 2017
+> Mobile App for PyData Conf 2017
 
 ![Alt text](screen.png?raw=true "Optional Title")
 
@@ -11,13 +11,13 @@ PyDelhi Conf 2017 Application
 
 ## Make sure you build the theme before using the app.
    - Make sure you have `pillow` installed. `pip install pillow --user`
-   - Paste/change the image in PyDelhiConf/tools/theming
-   - Change your directory to PyDelhiConf
+   - Paste/change the image in pydataConf/tools/theming
+   - Change your directory to pydataConf
    - Run command ``make theming`` 
 
 ### To test install kivy and run the following::
 
-    $ python pydelhiconf/main.py -m screen:droid2,portrait -m inspector
+    $ python pydataconf/main.py -m screen:droid2,portrait -m inspector
 
 ### Help on screens
 - https://kivy.org/docs/api-kivy.modules.screen.html
@@ -31,7 +31,7 @@ from which the images are loaded.
 1. Install buildozer: pip install buildozer
 2. Edit the buildozer.spec to specify if you have android ndk and sdk,
    if not they will be automatically be downloaded by the next step.
-3. Connect your mobile, enable usb debugging, Then goto pydelhiconf
+3. Connect your mobile, enable usb debugging, Then goto pydataconf
    folder and type `make apk`
 
 Link to a existing vm that can be re-used will be added for convenience.
@@ -76,7 +76,7 @@ Take special note of the names::
     The `name: ScreenSponsor`, in this same as the class name `class ScreenSponsor(...)`.
 
 
-Step 2: Save the file as `screensponsor.py` in the folder `<PyDelhiConf/pydelhiconf/uix/screens>`. Take note to name the file same as the class name,  in our case `ScreenSponsor` in lowercase with .py appended at end.
+Step 2: Save the file as `screensponsor.py` in the folder `<pydataconf/pydataconf/uix/screens>`. Take note to name the file same as the class name,  in our case `ScreenSponsor` in lowercase with .py appended at end.
 
 That's it. Now to load this screen::
 

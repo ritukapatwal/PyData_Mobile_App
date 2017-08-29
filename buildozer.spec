@@ -10,7 +10,7 @@ package.name = conference
 package.domain = org.pydataconf
 
 # (str) Source code where the main.py live
-source.dir = ./pydelhiconf
+source.dir = ./pydataconf
 
 # (list) Source files to include (let empty to include all the files)
 source.include_exts = py,png,jpg,kv,atlas,vs,fs,json,gif

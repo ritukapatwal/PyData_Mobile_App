@@ -1,4 +1,4 @@
-Thanks for showing interest in development of PyDelhi Conf app.
+Thanks for showing interest in development of pydata Conf app.
 The app requires many modifications as listed in the [README](./README.md).
 
 
