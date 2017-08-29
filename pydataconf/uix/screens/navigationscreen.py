@@ -18,56 +18,49 @@ class NavigationScreen(Screen):
 
 <MenuButton@PyConButton>
     group: 'LeftPanel'
+    text_size: self.size
+    halign: 'left'
+    valign: 'center'
+    padding: dp(15), dp(15)
     on_released: app.navigationdrawer.toggle_state()
 
 <LeftPanel@BoxLayout+Background>
     orientation: 'vertical'
     padding: dp(7), dp(7)
+    backcolor: app.base_active_color[:3] + [.5]
+        
     Image
         source: "atlas://data/default/logo"
         size_hint: 1, None
         height: dp(130)
         mipmap: True
-    Image
-        id: img
-        source: 'atlas://data/default/bg'
-        allow_stretch: True
-        color: app.base_active_color[:3] + [.5]
-        keep_ratio: False
-        ScrollView
-            size: img.size
-            GridLayout
-                cols: 1
-                size_hint_y: None
-                height: self.minimum_height
-                MenuButton
-                    id: bt_sched
-                    text: 'Schedule'
-                    on_released: app.load_screen('ScreenSchedule', manager=app.navigation_manager)
-                MenuButton
-                    text: 'Sponsors'
-                    on_released: app.load_screen('ScreenSponsor', manager=app.navigation_manager)
-                MenuButton
-                    text: 'Venue'
-                    on_released: app.load_screen('ScreenVenue', manager=app.navigation_manager)
-                MenuButton
-                    text: 'OpenSpaces'
-                    on_released: app.load_screen('ScreenOpenSpaces', manager=app.navigation_manager)
-                # MenuButton
-                #     text: 'DevSprints'
-                #     on_released: app.load_screen('ScreenDevSprints', manager=app.navigation_manager)
-                # MenuButton
-                #     text: 'Feedback'
-                #     on_released: app.load_screen('ScreenFeedback', manager=app.navigation_manager)
-                MenuButton
-                    text: 'Ticket'
-                    on_released: app.load_screen('ScreenTicket', manager=app.navigation_manager)
-                MenuButton
-                    text: 'Community'
-                    on_released: app.load_screen('ScreenCommunity', manager=app.navigation_manager)
-                MenuButton
-                    text: 'About'
-                    on_released: app.load_screen('ScreenAbout', manager=app.navigation_manager)
+    ScrollView
+        GridLayout
+            cols: 1
+            size_hint_y: None
+            height: self.minimum_height
+            MenuButton
+                id: bt_sched
+                text: 'Schedule'
+                on_released: app.load_screen('ScreenSchedule', manager=app.navigation_manager)
+            MenuButton
+                text: 'Sponsors'
+                on_released: app.load_screen('ScreenSponsor', manager=app.navigation_manager)
+            MenuButton
+                text: 'Venue'
+                on_released: app.load_screen('ScreenVenue', manager=app.navigation_manager)
+            MenuButton
+                text: 'OpenSpaces'
+                on_released: app.load_screen('ScreenOpenSpaces', manager=app.navigation_manager)
+            MenuButton
+                text: 'Ticket'
+                on_released: app.load_screen('ScreenTicket', manager=app.navigation_manager)
+            MenuButton
+                text: 'Community'
+                on_released: app.load_screen('ScreenCommunity', manager=app.navigation_manager)
+            MenuButton
+                text: 'About'
+                on_released: app.load_screen('ScreenAbout', manager=app.navigation_manager)
 
 <Topic@Label>
     opacity: 0
@@ -90,8 +83,8 @@ class NavigationScreen(Screen):
         Color:
             rgba: 92./256., 110./256., 118./255, 1
         Rectangle:
-            size: self.size
-            pos: self.pos
+            size: self.width, self.height
+            pos: self.x, self.y# - self.height
     ImBut
         color: 1, 1, 1, 1
         source: 'atlas://data/default/hamburger'
@@ -107,7 +100,8 @@ class NavigationScreen(Screen):
 
 
 <RightPanel@BoxLayout+Background>
-    source: 'atlas://data/default/bg'
+    #source: 'atlas://data/default/bg'
+    backcolor: 240./255., 240./255., 240./255., 1
     orientation: "vertical"
     TopBar
         id: topbar
@@ -124,7 +118,7 @@ class NavigationScreen(Screen):
         right_panel.ids.topbar.ids.topic.opacity=1
     NavigationDrawer
         id: navigationdrawer
-        #anim_type: 'slide_above_anim'
+        anim_type: 'slide_above_anim'
         on_parent: app.navigationdrawer = navigationdrawer
         LeftPanel
             id: left_panel

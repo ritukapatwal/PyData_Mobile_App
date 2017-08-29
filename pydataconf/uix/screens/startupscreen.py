@@ -47,17 +47,13 @@ class StartupScreen(Screen):
 <TouchRippleBehavior>
     ripple_color: app.base_active_color
 
-<PyConButton@TouchRippleBehavior+ToggleButtonBehavior+Background>
+<PyConButton@TouchRippleBehavior+ToggleButtonBehavior+Background+Label>
     text: ''
     size_hint_y: None
     allow_no_selection: False
     height: dp(45)
     backcolor: app.base_active_color if self.state == 'normal' else app.base_inactive_color
     source: 'atlas://data/default/but_light'
-    Label:
-        size: root.size
-        pos: root.pos
-        text: root.text
 
 <ImBut@TouchRippleBehavior+ButtonBehavior+Image>
     color: app.base_active_color

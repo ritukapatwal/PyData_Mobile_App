@@ -41,7 +41,7 @@ class ScreenAbout(Screen):
                     on_release: import webbrowser; webbrowser.open('https://github.com/pydata/PyData_Mobile_App/')
     ActiveButton
         text: 'An OpenSource initiative by Quanon Tech'
-        font_size: dp(27)
+        font_size: dp(15)
         bold: True
         on_release:
             import webbrowser; webbrowser.open('http://quanontech.com')

@@ -26,14 +26,15 @@ class TalkInfo(Factory.TouchRippleBehavior, Factory.ButtonBehavior, Factory.BoxL
 
     Builder.load_string('''
 <TalkInfo>
+    color: 1, 1, 1, 1
     canvas.before:
         Color:
             rgba: root.color 
         Rectangle:
-            size: self.size
-            pos: self.pos
+            size: self.width + dp(10), self.height
+            pos: self.x - dp(5), self.y
     size_hint_y: None
-    height: max(lblinfo.texture_size[1] + dp(4), dp(40))
+    height: max(lblinfo.texture_size[1] + dp(24), dp(40))
     spacing: dp(9)
     # on_release: 
     #     scr = app.load_screen('ScreenTalks', manager=app.navigation_manager)
@@ -42,11 +43,13 @@ class TalkInfo(Factory.TouchRippleBehavior, Factory.ButtonBehavior, Factory.BoxL
         size_hint: None, 1
         valign: 'middle'
         width: dp(45)
+        color: .09, .09, .09, 1
         text: "{}\\n{}".format(root.talk['start_time'], root.talk['end_time'])
     Label:
         id: lblinfo
         valign: 'middle'
         size_hint: 1, 1
+        color: .09, .09, .09, 1
         text_size: self.width, None
         text: root.talk['title']
 ''')
@@ -63,24 +66,24 @@ class ScreenSchedule(Screen):
 
     Builder.load_string('''
 
-<AccordionItemTitle>
-    text_size: self.width - dp(10), self.height
-    halign: 'left'
-    valign: 'middle'
+# <AccordionItemTitle>
+#     text_size: self.width - dp(10), self.height
+#     halign: 'left'
+#     valign: 'middle'
 
-<AccordionItem>
-    back_color: app.base_inactive_light
-    canvas.before:
-        Color
-            rgba: root.back_color or (1, 1, 1, 1)
-        Rectangle
-            size: dp(270), dp(32)
-            pos: self.x, self.top - dp(40)
-        Color
-            rgba: (list(root.back_color[:3])+[.3]) if root.back_color else (1, 1, 1, 1)
-        Rectangle
-            size: dp(270), dp(32)
-            pos: self.x + dp(5), self.top - (dp(40) + dp(5)) 
+# <AccordionItem>
+#     back_color: app.base_inactive_light
+#     canvas.before:
+#         Color
+#             rgba: root.back_color or (1, 1, 1, 1)
+#         Rectangle
+#             size: dp(270), dp(32)
+#             pos: self.x, self.top - dp(40)
+#         Color
+#             rgba: (list(root.back_color[:3])+[.3]) if root.back_color else (1, 1, 1, 1)
+#         Rectangle
+#             size: dp(270), dp(32)
+#             pos: self.x + dp(5), self.top - (dp(40) + dp(5)) 
 
 <Header@LeftAlignedLabel>
     size_hint_y: None
@@ -100,11 +103,28 @@ class ScreenSchedule(Screen):
     name: 'ScreenSchedule'
     BoxLayout
         # spacing: dp(20)
+        canvas.before:
+            Color:
+                rgba: 92./256., 110./256., 118./255, 1
+            Rectangle:
+                size: self.width, dp(45)
+                pos: self.x, self.top - dp(45)
         orientation: 'vertical'
         padding: dp(4)
-        Accordion
+        TabbedPanel
             id: accordian_days
+            canvas.before:
+                Color
+                    rgba: .09, .09, .09, 1
+                Rectangle:
+                    size: self.width + dp(12), dp(54)
+                    pos: -dp(4), -dp(4)
+
+            background_color: 1, 1, 1, 0
+            do_default_tab: False
             orientation: 'vertical'
+            tab_width: self.width/2
+            tab_pos: 'top_left'
 
 <TalkTitle@BoxLayout>
     spacing: dp(9)   
@@ -116,11 +136,14 @@ class ScreenSchedule(Screen):
     Header
         text: 'Title'
 
+
 <TabbedCarousel>
+    tab_pos: 'bottom_left'
+    tab_width: self.width/3
     background_color: 210./256., 127./256., 59./255, 0
 
 <TabbedPanelHeader>
-    background_color: (1, 1, 1, 1) if self.state == 'down' else app.base_active_color
+    background_color: (1, 1, 1, 1) if self.state == 'down' else (0, 0, 0, 0)
     background_normal: 'atlas://data/default/but_overlay'
     background_down: 'atlas://data/default/but_overlay'
 
@@ -174,16 +197,15 @@ class ScreenSchedule(Screen):
 
         # perf optims, minimize dot lookups
         acordion_add = self.ids.accordian_days.add_widget
-        AccordionItem = Factory.AccordionItem
+        TI = Factory.TabbedPanelItem
         Track = Factory.Track
 
         first = None
         today = datetime.datetime.now()
-        
         for date in dates:
             # add current day as accordion widget
             ccday = datetime.datetime.strptime(date,"%Y-%m-%d")
-            cday = AccordionItem(title=ccday.strftime("%d %b %Y"))
+            cday = TI(text=ccday.strftime("%d %b %Y"))
 
             if ccday.date()  >=  today.date():
                 if not first: first = cday
@@ -197,7 +219,7 @@ class ScreenSchedule(Screen):
             tsa = trackscreens.append
             tca = tcarousel.add_widget
             for track in tracks:
-                new_trk = Track(name=track)
+                new_trk = Track(name=track,)
                 tsa(new_trk)
                 # add track to carousel
                 tca(new_trk)
@@ -222,5 +244,5 @@ class ScreenSchedule(Screen):
                 trackscreens[int(tid)-1].ids.container.add_widget(ti)
 
             cday.add_widget(tcarousel)
-        if first: container.select(first)
+        if first: first.trigger_action()
         Factory.Animation(d=.5, opacity=1).start(container)
